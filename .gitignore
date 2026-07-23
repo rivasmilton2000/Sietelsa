@@ -1,0 +1,8 @@
+.env
+logs/*.log
+logs/*.log.*
+logs/*.tmp
+database/backup_*.sql
+assets/cache/img/*
+assets/uploads/usuarios/*
+!assets/uploads/usuarios/.gitkeep
