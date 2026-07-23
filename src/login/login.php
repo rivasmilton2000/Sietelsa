@@ -116,12 +116,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Star Admin2 </title>
+    <title>Iniciar sesión | SIETELSA</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="../dashboard_admin/assets/vendors/feather/feather.css">
     <link rel="stylesheet" href="../dashboard_admin/assets/vendors/mdi/css/materialdesignicons.min.css">
@@ -136,10 +136,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- End plugin css for this page -->
     <!-- inject:css -->
     <link rel="stylesheet" href="../dashboard_admin/assets/css/style.css">
+    <link rel="stylesheet" href="<?= auth_escape(app_url('src/website/assets/css/sietelsa.css')) ?>">
     <!-- endinject -->
-    <link rel="shortcut icon" href="../dashboard_admin/assets/images/favicon.png" />
+    <link rel="icon" type="image/png" href="<?= auth_escape(sietelsa_logo_url()) ?>">
+    <script>document.documentElement.classList.add('sietelsa-js');</script>
   </head>
   <body>
+    <div class="sietelsa-page-loader" role="status" aria-label="Cargando inicio de sesión">
+      <div class="sietelsa-loader-content">
+        <?= sietelsa_logo_picture('sietelsa-brand-logo sietelsa-loader-logo') ?>
+        <span class="sietelsa-loader-spinner" aria-hidden="true"></span>
+      </div>
+    </div>
     <div class="container-scroller">
       <div class="container-fluid page-body-wrapper full-page-wrapper">
         <div class="content-wrapper d-flex align-items-center auth px-0">
@@ -147,22 +155,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="col-lg-4 mx-auto">
               <div class="auth-form-light text-left py-5 px-4 px-sm-5">
                 <div class="brand-logo">
-                  <img src="../dashboard_admin/assets/images/logo.svg" alt="logo">
+                  <?= sietelsa_logo_picture('sietelsa-brand-logo sietelsa-login-logo') ?>
                 </div>
                 <h4>Hello! let's get started</h4>
                 <h6 class="fw-light">Sign in to continue.</h6>
                 <?php if ($errorMessage !== ''): ?>
-                  <div class="alert alert-danger" role="alert" aria-live="polite">
+                  <div class="alert alert-danger" role="alert" aria-live="polite" data-sietelsa-alert="error">
                     <?= auth_escape($errorMessage) ?>
                   </div>
                 <?php elseif ($statusMessage !== ''): ?>
-                  <div class="alert alert-success" role="status" aria-live="polite">
+                  <div class="alert alert-success" role="status" aria-live="polite" data-sietelsa-alert="success">
                     <?= auth_escape($statusMessage) ?>
                   </div>
                 <?php endif; ?>
-                <form class="pt-3" method="post" action="<?= auth_escape(app_url('src/login/login.php')) ?>" id="loginForm">
+                <form class="pt-3" method="post" action="<?= auth_escape(app_url('src/login/login.php')) ?>" id="loginForm" data-sietelsa-loading>
                   <input type="hidden" name="csrf_token" value="<?= auth_escape(auth_csrf_token()) ?>">
                   <div class="form-group">
+                    <label class="visually-hidden" for="exampleInputEmail1">Correo o usuario</label>
                     <input
                       type="text"
                       class="form-control form-control-lg"
@@ -176,6 +185,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                       autofocus>
                   </div>
                   <div class="form-group">
+                    <label class="visually-hidden" for="exampleInputPassword1">Contraseña</label>
                     <input
                       type="password"
                       class="form-control form-control-lg"
@@ -227,12 +237,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script src="../dashboard_admin/assets/js/hoverable-collapse.js"></script>
     <script src="../dashboard_admin/assets/js/todolist.js"></script>
     <!-- endinject -->
-    <script>
-      document.getElementById('loginForm').addEventListener('submit', function () {
-        const button = document.getElementById('loginButton');
-        button.disabled = true;
-        button.textContent = 'VALIDATING...';
-      });
-    </script>
+    <script src="<?= auth_escape(app_url('src/website/assets/vendor/sweetalert2/sweetalert2.all.min.js')) ?>"></script>
+    <script src="<?= auth_escape(app_url('src/website/assets/js/sietelsa-ui.js')) ?>"></script>
   </body>
 </html>

@@ -5,18 +5,18 @@ declare(strict_types=1);
 require_once __DIR__ . '/includes/auth.php';
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Index - Maxim Bootstrap Template</title>
-  <meta name="description" content="">
+  <title>SIETELSA | Servicios de Electricidad y Telecomunicaciones</title>
+  <meta name="description" content="Servicios de electricidad y telecomunicaciones de SIETELSA.">
   <meta name="keywords" content="">
 
   <!-- Favicons -->
-  <link href="src/website/assets/img/favicon.png" rel="icon">
-  <link href="src/website/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link href="<?= auth_escape(sietelsa_logo_url()) ?>" rel="icon" type="image/png">
+  <link href="<?= auth_escape(sietelsa_logo_url()) ?>" rel="apple-touch-icon">
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -32,6 +32,8 @@ require_once __DIR__ . '/includes/auth.php';
 
   <!-- Main CSS File -->
   <link href="src/website/assets/css/main.css" rel="stylesheet">
+  <link href="src/website/assets/css/sietelsa.css" rel="stylesheet">
+  <script>document.documentElement.classList.add('sietelsa-js');</script>
 
   <!-- =======================================================
   * Template Name: Maxim
@@ -44,55 +46,16 @@ require_once __DIR__ . '/includes/auth.php';
 
 <body class="index-page">
 
+  <div class="sietelsa-page-loader" role="status" aria-label="Cargando SIETELSA">
+    <div class="sietelsa-loader-content">
+      <?= sietelsa_logo_picture('sietelsa-brand-logo sietelsa-loader-logo') ?>
+      <span class="sietelsa-loader-spinner" aria-hidden="true"></span>
+    </div>
+  </div>
+
   <header id="header" class="header d-flex align-items-center fixed-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
-
-      <a href="index.php" class="logo d-flex align-items-center">
-        <!-- Uncomment the line below if you also wish to use an image logo -->
-        <!-- <img src="src/website/assets/img/logo.png" alt=""> -->
-        <h1 class="sitename">Maxim</h1>
-      </a>
-
-      <nav id="navmenu" class="navmenu">
-        <ul>
-          <li><a href="#hero" class="active">Home</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#portfolio">Portfolio</a></li>
-          <li><a href="#team">Team</a></li>
-          <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-            <ul>
-              <li><a href="#">Dropdown 1</a></li>
-              <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                <ul>
-                  <li><a href="#">Deep Dropdown 1</a></li>
-                  <li><a href="#">Deep Dropdown 2</a></li>
-                  <li><a href="#">Deep Dropdown 3</a></li>
-                  <li><a href="#">Deep Dropdown 4</a></li>
-                  <li><a href="#">Deep Dropdown 5</a></li>
-                </ul>
-              </li>
-              <li><a href="#">Dropdown 2</a></li>
-              <li><a href="#">Dropdown 3</a></li>
-              <li><a href="#">Dropdown 4</a></li>
-            </ul>
-          </li>
-          <?php if (auth_is_admin()): ?>
-            <li><a href="<?= auth_escape(app_url('src/dashboard_admin/index.php')) ?>">Dashboard</a></li>
-            <li><a href="#" onclick="event.preventDefault(); document.getElementById('websiteLogoutForm').submit();">Cerrar sesión</a></li>
-          <?php else: ?>
-            <li><a href="<?= auth_escape(app_url('src/login/login.php')) ?>">Iniciar sesión</a></li>
-          <?php endif; ?>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
-      <?php if (auth_is_admin()): ?>
-        <form id="websiteLogoutForm" method="post" action="<?= auth_escape(app_url('src/login/logout.php')) ?>" class="d-none">
-          <input type="hidden" name="csrf_token" value="<?= auth_escape(auth_csrf_token()) ?>">
-        </form>
-      <?php endif; ?>
-
+      <?php require __DIR__ . '/includes/public-navbar.php'; ?>
     </div>
   </header>
 
@@ -101,14 +64,14 @@ require_once __DIR__ . '/includes/auth.php';
     <!-- Hero Section -->
     <section id="hero" class="hero section dark-background">
 
-      <img src="src/website/assets/img/hero-bg.jpg" alt="" data-aos="fade-in">
+      <img src="src/website/assets/img/hero-bg.jpg" width="1920" height="1280" class="sietelsa-image-cover" alt="" decoding="async" fetchpriority="high" data-aos="fade-in">
 
       <div class="container text-center" data-aos="fade-up" data-aos-delay="100">
         <div class="row justify-content-center">
           <div class="col-lg-8">
             <h2>Welcome to Our Maxim</h2>
             <p>We are team of talented designers making websites with Bootstrap</p>
-            <a href="#about" class="btn-get-started">Get Started</a>
+            <a href="#nosotros" class="btn-get-started">Get Started</a>
           </div>
         </div>
       </div>
@@ -116,7 +79,7 @@ require_once __DIR__ . '/includes/auth.php';
     </section><!-- /Hero Section -->
 
     <!-- About Section -->
-    <section id="about" class="about section">
+    <section id="nosotros" class="about section">
 
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
@@ -129,7 +92,7 @@ require_once __DIR__ . '/includes/auth.php';
         <div class="row gy-3">
 
           <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-            <img src="src/website/assets/img/about.jpg" alt="" class="img-fluid">
+            <img src="src/website/assets/img/about.jpg" width="800" height="708" alt="" class="img-fluid sietelsa-image-cover" loading="lazy" decoding="async">
           </div>
 
           <div class="col-lg-6 d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="200">
@@ -170,7 +133,7 @@ require_once __DIR__ . '/includes/auth.php';
     </section><!-- /About Section -->
 
     <!-- Cards Section -->
-    <section id="cards" class="cards section light-background">
+    <section id="proyectos" class="cards section light-background">
 
       <div class="container">
 
@@ -272,15 +235,15 @@ require_once __DIR__ . '/includes/auth.php';
             <div class="tab-content" data-aos="fade-up" data-aos-delay="200">
 
               <div class="tab-pane fade active show" id="tabs-tab-1">
-                <img src="src/website/assets/img/tabs-1.jpg" alt="" class="img-fluid">
+                <img src="src/website/assets/img/tabs-1.jpg" width="1024" height="1024" alt="" class="img-fluid sietelsa-image-cover" loading="lazy" decoding="async">
               </div><!-- End Tab Content Item -->
 
               <div class="tab-pane fade" id="tabs-tab-2">
-                <img src="src/website/assets/img/tabs-2.jpg" alt="" class="img-fluid">
+                <img src="src/website/assets/img/tabs-2.jpg" width="1024" height="1024" alt="" class="img-fluid sietelsa-image-cover" loading="lazy" decoding="async">
               </div><!-- End Tab Content Item -->
 
               <div class="tab-pane fade" id="tabs-tab-3">
-                <img src="src/website/assets/img/tabs-3.jpg" alt="" class="img-fluid">
+                <img src="src/website/assets/img/tabs-3.jpg" width="1024" height="1024" alt="" class="img-fluid sietelsa-image-cover" loading="lazy" decoding="async">
               </div><!-- End Tab Content Item -->
             </div>
 
@@ -293,7 +256,7 @@ require_once __DIR__ . '/includes/auth.php';
     </section><!-- /Tabs Section -->
 
     <!-- Services Section -->
-    <section id="services" class="services section">
+    <section id="servicios" class="services section">
 
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
@@ -423,7 +386,7 @@ require_once __DIR__ . '/includes/auth.php';
                 <span>Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.</span>
                 <i class="bi bi-quote quote-icon-right"></i>
                 </p>
-                <img src="src/website/assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">
+                <img src="src/website/assets/img/testimonials/testimonials-1.jpg" width="400" height="400" class="testimonial-img sietelsa-image-cover" alt="" loading="lazy" decoding="async">
                 <h3>Saul Goodman</h3>
                 <h4>Ceo &amp; Founder</h4>
               </div>
@@ -436,7 +399,7 @@ require_once __DIR__ . '/includes/auth.php';
                   <span>Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid malis quorum velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa.</span>
                   <i class="bi bi-quote quote-icon-right"></i>
                 </p>
-                <img src="src/website/assets/img/testimonials/testimonials-2.jpg" class="testimonial-img" alt="">
+                <img src="src/website/assets/img/testimonials/testimonials-2.jpg" width="400" height="400" class="testimonial-img sietelsa-image-cover" alt="" loading="lazy" decoding="async">
                 <h3>Sara Wilsson</h3>
                 <h4>Designer</h4>
               </div>
@@ -449,7 +412,7 @@ require_once __DIR__ . '/includes/auth.php';
                   <span>Enim nisi quem export duis labore cillum quae magna enim sint quorum nulla quem veniam duis minim tempor labore quem eram duis noster aute amet eram fore quis sint minim.</span>
                   <i class="bi bi-quote quote-icon-right"></i>
                 </p>
-                <img src="src/website/assets/img/testimonials/testimonials-3.jpg" class="testimonial-img" alt="">
+                <img src="src/website/assets/img/testimonials/testimonials-3.jpg" width="400" height="400" class="testimonial-img sietelsa-image-cover" alt="" loading="lazy" decoding="async">
                 <h3>Jena Karlis</h3>
                 <h4>Store Owner</h4>
               </div>
@@ -462,7 +425,7 @@ require_once __DIR__ . '/includes/auth.php';
                   <span>Fugiat enim eram quae cillum dolore dolor amet nulla culpa multos export minim fugiat dolor enim duis veniam ipsum anim magna sunt elit fore quem dolore labore illum veniam.</span>
                   <i class="bi bi-quote quote-icon-right"></i>
                 </p>
-                <img src="src/website/assets/img/testimonials/testimonials-4.jpg" class="testimonial-img" alt="">
+                <img src="src/website/assets/img/testimonials/testimonials-4.jpg" width="400" height="400" class="testimonial-img sietelsa-image-cover" alt="" loading="lazy" decoding="async">
                 <h3>Matt Brandon</h3>
                 <h4>Freelancer</h4>
               </div>
@@ -475,7 +438,7 @@ require_once __DIR__ . '/includes/auth.php';
                   <span>Quis quorum aliqua sint quem legam fore sunt eram irure aliqua veniam tempor noster veniam sunt culpa nulla illum cillum fugiat legam esse veniam culpa fore nisi cillum quid.</span>
                   <i class="bi bi-quote quote-icon-right"></i>
                 </p>
-                <img src="src/website/assets/img/testimonials/testimonials-5.jpg" class="testimonial-img" alt="">
+                <img src="src/website/assets/img/testimonials/testimonials-5.jpg" width="400" height="400" class="testimonial-img sietelsa-image-cover" alt="" loading="lazy" decoding="async">
                 <h3>John Larson</h3>
                 <h4>Entrepreneur</h4>
               </div>
@@ -490,7 +453,7 @@ require_once __DIR__ . '/includes/auth.php';
     </section><!-- /Testimonials Section -->
 
     <!-- Portfolio Section -->
-    <section id="portfolio" class="portfolio section">
+    <section id="portafolio" class="portfolio section">
 
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
@@ -514,7 +477,7 @@ require_once __DIR__ . '/includes/auth.php';
 
             <div class="col-xl-3 col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
               <div class="portfolio-content h-100">
-                <img src="src/website/assets/img/portfolio/app-1.jpg" class="img-fluid" alt="">
+                <img src="src/website/assets/img/portfolio/app-1.jpg" width="1024" height="768" class="img-fluid sietelsa-image-cover" alt="" loading="lazy" decoding="async">
                 <div class="portfolio-info">
                   <a href="src/website/assets/img/portfolio/app-1.jpg" data-gallery="portfolio-gallery-app" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
                   <a href="src/website/portfolio-details.php" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
@@ -524,7 +487,7 @@ require_once __DIR__ . '/includes/auth.php';
 
             <div class="col-xl-3 col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
               <div class="portfolio-content h-100">
-                <img src="src/website/assets/img/portfolio/product-1.jpg" class="img-fluid" alt="">
+                <img src="src/website/assets/img/portfolio/product-1.jpg" width="1024" height="768" class="img-fluid sietelsa-image-cover" alt="" loading="lazy" decoding="async">
                 <div class="portfolio-info">
                   <a href="src/website/assets/img/portfolio/product-1.jpg" data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
                   <a href="src/website/portfolio-details.php" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
@@ -534,7 +497,7 @@ require_once __DIR__ . '/includes/auth.php';
 
             <div class="col-xl-3 col-lg-4 col-md-6 portfolio-item isotope-item filter-branding">
               <div class="portfolio-content h-100">
-                <img src="src/website/assets/img/portfolio/branding-1.jpg" class="img-fluid" alt="">
+                <img src="src/website/assets/img/portfolio/branding-1.jpg" width="1024" height="768" class="img-fluid sietelsa-image-cover" alt="" loading="lazy" decoding="async">
                 <div class="portfolio-info">
                   <a href="src/website/assets/img/portfolio/branding-1.jpg" data-gallery="portfolio-gallery-branding" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
                   <a href="src/website/portfolio-details.php" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
@@ -544,7 +507,7 @@ require_once __DIR__ . '/includes/auth.php';
 
             <div class="col-xl-3 col-lg-4 col-md-6 portfolio-item isotope-item filter-books">
               <div class="portfolio-content h-100">
-                <img src="src/website/assets/img/portfolio/books-1.jpg" class="img-fluid" alt="">
+                <img src="src/website/assets/img/portfolio/books-1.jpg" width="1024" height="768" class="img-fluid sietelsa-image-cover" alt="" loading="lazy" decoding="async">
                 <div class="portfolio-info">
                   <a href="src/website/assets/img/portfolio/books-1.jpg" data-gallery="portfolio-gallery-book" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
                   <a href="src/website/portfolio-details.php" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
@@ -554,7 +517,7 @@ require_once __DIR__ . '/includes/auth.php';
 
             <div class="col-xl-3 col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
               <div class="portfolio-content h-100">
-                <img src="src/website/assets/img/portfolio/app-2.jpg" class="img-fluid" alt="">
+                <img src="src/website/assets/img/portfolio/app-2.jpg" width="1024" height="768" class="img-fluid sietelsa-image-cover" alt="" loading="lazy" decoding="async">
                 <div class="portfolio-info">
                   <a href="src/website/assets/img/portfolio/app-2.jpg" data-gallery="portfolio-gallery-app" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
                   <a href="src/website/portfolio-details.php" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
@@ -564,7 +527,7 @@ require_once __DIR__ . '/includes/auth.php';
 
             <div class="col-xl-3 col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
               <div class="portfolio-content h-100">
-                <img src="src/website/assets/img/portfolio/product-2.jpg" class="img-fluid" alt="">
+                <img src="src/website/assets/img/portfolio/product-2.jpg" width="1024" height="768" class="img-fluid sietelsa-image-cover" alt="" loading="lazy" decoding="async">
                 <div class="portfolio-info">
                   <a href="src/website/assets/img/portfolio/product-2.jpg" data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
                   <a href="src/website/portfolio-details.php" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
@@ -574,7 +537,7 @@ require_once __DIR__ . '/includes/auth.php';
 
             <div class="col-xl-3 col-lg-4 col-md-6 portfolio-item isotope-item filter-branding">
               <div class="portfolio-content h-100">
-                <img src="src/website/assets/img/portfolio/branding-2.jpg" class="img-fluid" alt="">
+                <img src="src/website/assets/img/portfolio/branding-2.jpg" width="1024" height="768" class="img-fluid sietelsa-image-cover" alt="" loading="lazy" decoding="async">
                 <div class="portfolio-info">
                   <a href="src/website/assets/img/portfolio/branding-2.jpg" data-gallery="portfolio-gallery-branding" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
                   <a href="src/website/portfolio-details.php" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
@@ -584,7 +547,7 @@ require_once __DIR__ . '/includes/auth.php';
 
             <div class="col-xl-3 col-lg-4 col-md-6 portfolio-item isotope-item filter-books">
               <div class="portfolio-content h-100">
-                <img src="src/website/assets/img/portfolio/books-2.jpg" class="img-fluid" alt="">
+                <img src="src/website/assets/img/portfolio/books-2.jpg" width="1024" height="768" class="img-fluid sietelsa-image-cover" alt="" loading="lazy" decoding="async">
                 <div class="portfolio-info">
                   <a href="src/website/assets/img/portfolio/books-2.jpg" data-gallery="portfolio-gallery-book" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
                   <a href="src/website/portfolio-details.php" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
@@ -594,7 +557,7 @@ require_once __DIR__ . '/includes/auth.php';
 
             <div class="col-xl-3 col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
               <div class="portfolio-content h-100">
-                <img src="src/website/assets/img/portfolio/app-3.jpg" class="img-fluid" alt="">
+                <img src="src/website/assets/img/portfolio/app-3.jpg" width="1024" height="768" class="img-fluid sietelsa-image-cover" alt="" loading="lazy" decoding="async">
                 <div class="portfolio-info">
                   <a href="src/website/assets/img/portfolio/app-3.jpg" data-gallery="portfolio-gallery-app" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
                   <a href="src/website/portfolio-details.php" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
@@ -604,7 +567,7 @@ require_once __DIR__ . '/includes/auth.php';
 
             <div class="col-xl-3 col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
               <div class="portfolio-content h-100">
-                <img src="src/website/assets/img/portfolio/product-3.jpg" class="img-fluid" alt="">
+                <img src="src/website/assets/img/portfolio/product-3.jpg" width="1024" height="768" class="img-fluid sietelsa-image-cover" alt="" loading="lazy" decoding="async">
                 <div class="portfolio-info">
                   <a href="src/website/assets/img/portfolio/product-3.jpg" data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
                   <a href="src/website/portfolio-details.php" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
@@ -614,7 +577,7 @@ require_once __DIR__ . '/includes/auth.php';
 
             <div class="col-xl-3 col-lg-4 col-md-6 portfolio-item isotope-item filter-branding">
               <div class="portfolio-content h-100">
-                <img src="src/website/assets/img/portfolio/branding-3.jpg" class="img-fluid" alt="">
+                <img src="src/website/assets/img/portfolio/branding-3.jpg" width="1024" height="768" class="img-fluid sietelsa-image-cover" alt="" loading="lazy" decoding="async">
                 <div class="portfolio-info">
                   <a href="src/website/assets/img/portfolio/branding-3.jpg" data-gallery="portfolio-gallery-branding" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
                   <a href="src/website/portfolio-details.php" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
@@ -624,7 +587,7 @@ require_once __DIR__ . '/includes/auth.php';
 
             <div class="col-xl-3 col-lg-4 col-md-6 portfolio-item isotope-item filter-books">
               <div class="portfolio-content h-100">
-                <img src="src/website/assets/img/portfolio/books-3.jpg" class="img-fluid" alt="">
+                <img src="src/website/assets/img/portfolio/books-3.jpg" width="1024" height="768" class="img-fluid sietelsa-image-cover" alt="" loading="lazy" decoding="async">
                 <div class="portfolio-info">
                   <a href="src/website/assets/img/portfolio/books-3.jpg" data-gallery="portfolio-gallery-book" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
                   <a href="src/website/portfolio-details.php" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
@@ -655,7 +618,7 @@ require_once __DIR__ . '/includes/auth.php';
 
           <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
             <div class="member">
-              <img src="src/website/assets/img/team/team-1.jpg" class="img-fluid" alt="">
+              <img src="src/website/assets/img/team/team-1.jpg" width="600" height="600" class="img-fluid sietelsa-image-cover" alt="" loading="lazy" decoding="async">
               <div class="member-info">
                 <div class="member-info-content">
                   <h4>Walter White</h4>
@@ -673,7 +636,7 @@ require_once __DIR__ . '/includes/auth.php';
 
           <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
             <div class="member">
-              <img src="src/website/assets/img/team/team-2.jpg" class="img-fluid" alt="">
+              <img src="src/website/assets/img/team/team-2.jpg" width="600" height="600" class="img-fluid sietelsa-image-cover" alt="" loading="lazy" decoding="async">
               <div class="member-info">
                 <div class="member-info-content">
                   <h4>Sarah Jhonson</h4>
@@ -691,7 +654,7 @@ require_once __DIR__ . '/includes/auth.php';
 
           <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
             <div class="member">
-              <img src="src/website/assets/img/team/team-3.jpg" class="img-fluid" alt="">
+              <img src="src/website/assets/img/team/team-3.jpg" width="600" height="600" class="img-fluid sietelsa-image-cover" alt="" loading="lazy" decoding="async">
               <div class="member-info">
                 <div class="member-info-content">
                   <h4>William Anderson</h4>
@@ -709,7 +672,7 @@ require_once __DIR__ . '/includes/auth.php';
 
           <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
             <div class="member">
-              <img src="src/website/assets/img/team/team-4.jpg" class="img-fluid" alt="">
+              <img src="src/website/assets/img/team/team-4.jpg" width="600" height="600" class="img-fluid sietelsa-image-cover" alt="" loading="lazy" decoding="async">
               <div class="member-info">
                 <div class="member-info-content">
                   <h4>Amanda Jepson</h4>
@@ -807,7 +770,7 @@ require_once __DIR__ . '/includes/auth.php';
     </section><!-- /Faq Section -->
 
     <!-- Contact Section -->
-    <section id="contact" class="contact section">
+    <section id="contacto" class="contact section">
 
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
@@ -819,7 +782,7 @@ require_once __DIR__ . '/includes/auth.php';
 
         <div class="row gy-4">
 
-          <div class="col-lg-5">
+          <div class="col-lg-5" id="ubicacion">
 
             <div class="info-wrap">
               <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="200">
@@ -851,7 +814,7 @@ require_once __DIR__ . '/includes/auth.php';
           </div>
 
           <div class="col-lg-7">
-            <form action="src/website/forms/contact.php" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
+            <form action="src/website/forms/contact.php" method="post" class="php-email-form" data-sietelsa-loading data-aos="fade-up" data-aos-delay="200">
               <div class="row gy-4">
 
                 <div class="col-md-6">
@@ -899,8 +862,8 @@ require_once __DIR__ . '/includes/auth.php';
     <div class="container footer-top">
       <div class="row gy-4">
         <div class="col-lg-4 col-md-6 footer-about">
-          <a href="index.php" class="logo d-flex align-items-center">
-            <span class="sitename">Maxim</span>
+          <a href="<?= auth_escape(app_url('index.php')) ?>" class="logo d-flex align-items-center" aria-label="SIETELSA - Inicio">
+            <?= sietelsa_logo_picture('sietelsa-brand-logo sietelsa-footer-logo', '', false) ?>
           </a>
           <div class="footer-contact pt-3">
             <p>A108 Adam Street</p>
@@ -941,7 +904,7 @@ require_once __DIR__ . '/includes/auth.php';
         <div class="col-lg-4 col-md-12 footer-newsletter">
           <h4>Our Newsletter</h4>
           <p>Subscribe to our newsletter and receive the latest news about our products and services!</p>
-          <form action="src/website/forms/newsletter.php" method="post" class="php-email-form">
+          <form action="src/website/forms/newsletter.php" method="post" class="php-email-form" data-sietelsa-loading>
             <div class="newsletter-form"><input type="email" name="email"><input type="submit" value="Subscribe"></div>
             <div class="loading">Loading</div>
             <div class="error-message"></div>
@@ -953,7 +916,7 @@ require_once __DIR__ . '/includes/auth.php';
     </div>
 
     <div class="container copyright text-center mt-4">
-      <p>© <span>Copyright</span> <strong class="px-1 sitename">Maxim</strong> <span>All Rights Reserved</span></p>
+      <p>© <span>Copyright</span> <strong class="px-1 sitename">SIETELSA</strong> <span>Todos los derechos reservados</span></p>
       <div class="credits">
         <!-- All the links in the footer should remain intact. -->
         <!-- You can delete the links only if you've purchased the pro version. -->
@@ -968,9 +931,6 @@ require_once __DIR__ . '/includes/auth.php';
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-  <!-- Preloader -->
-  <div id="preloader"></div>
-
   <!-- Vendor JS Files -->
   <script src="src/website/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="src/website/assets/vendor/php-email-form/validate.js"></script>
@@ -982,6 +942,8 @@ require_once __DIR__ . '/includes/auth.php';
 
   <!-- Main JS File -->
   <script src="src/website/assets/js/main.js"></script>
+  <script src="src/website/assets/vendor/sweetalert2/sweetalert2.all.min.js"></script>
+  <script src="src/website/assets/js/sietelsa-ui.js"></script>
 
 </body>
 

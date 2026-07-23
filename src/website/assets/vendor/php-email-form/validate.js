@@ -66,7 +66,11 @@
       thisForm.querySelector('.loading').classList.remove('d-block');
       if (data.trim() == 'OK') {
         thisForm.querySelector('.sent-message').classList.add('d-block');
-        thisForm.reset(); 
+        thisForm.reset();
+        thisForm.dispatchEvent(new CustomEvent('sietelsa:form-complete', { bubbles: true }));
+        if (window.SietelsaAlert) {
+          window.SietelsaAlert.success('La información se envió correctamente.');
+        }
       } else {
         throw new Error(data ? data : 'Form submission failed and no error message returned from: ' + action); 
       }
@@ -77,9 +81,14 @@
   }
 
   function displayError(thisForm, error) {
+    console.error('[SIETELSA] Error controlado en formulario:', error);
     thisForm.querySelector('.loading').classList.remove('d-block');
-    thisForm.querySelector('.error-message').innerHTML = error;
+    thisForm.querySelector('.error-message').textContent = 'No fue posible enviar la información. Intente nuevamente.';
     thisForm.querySelector('.error-message').classList.add('d-block');
+    thisForm.dispatchEvent(new CustomEvent('sietelsa:form-complete', { bubbles: true }));
+    if (window.SietelsaAlert) {
+      window.SietelsaAlert.error('No fue posible enviar la información. Revise su conexión e intente nuevamente.');
+    }
   }
 
 })();

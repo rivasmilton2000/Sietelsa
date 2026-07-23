@@ -1,0 +1,283 @@
+:root {
+  --sietelsa-primary: #15266f;
+  --sietelsa-primary-dark: #0f1d58;
+  --sietelsa-accent: #e63946;
+  --sietelsa-light: #ffffff;
+  --sietelsa-focus: #8eb7ff;
+  --heading-color: var(--sietelsa-primary);
+  --accent-color: var(--sietelsa-accent);
+  --nav-color: var(--sietelsa-light);
+  --nav-hover-color: var(--sietelsa-accent);
+  --nav-mobile-background-color: var(--sietelsa-primary-dark);
+  --nav-dropdown-hover-color: var(--sietelsa-accent);
+}
+
+html {
+  scroll-padding-top: 96px;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+.sietelsa-brand-logo {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.header,
+.scrolled .header {
+  --background-color: var(--sietelsa-primary);
+  --default-color: var(--sietelsa-light);
+  --heading-color: var(--sietelsa-light);
+  background: var(--sietelsa-primary);
+}
+
+.dark-background {
+  --background-color: var(--sietelsa-primary-dark);
+  --heading-color: var(--sietelsa-light);
+}
+
+.scrolled .header {
+  background: var(--sietelsa-primary-dark);
+}
+
+.header .logo .sietelsa-website-logo {
+  width: 126px;
+  max-height: 70px;
+  margin: 0;
+}
+
+.navmenu a,
+.navmenu a:focus,
+.sietelsa-nav-logout {
+  color: var(--sietelsa-light);
+}
+
+.sietelsa-nav-logout-form {
+  margin: 0;
+}
+
+.sietelsa-nav-logout {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  padding: 18px 15px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  text-align: left;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.navmenu a:hover,
+.navmenu .active,
+.navmenu .active:focus,
+.sietelsa-nav-logout:hover {
+  color: var(--sietelsa-light);
+}
+
+.navmenu a::before,
+.sietelsa-nav-logout::before {
+  background-color: var(--sietelsa-accent);
+}
+
+.navmenu a:focus-visible,
+.sietelsa-nav-logout:focus-visible,
+.mobile-nav-toggle:focus-visible,
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--sietelsa-focus);
+  outline-offset: 3px;
+}
+
+.mobile-nav-toggle {
+  border: 0;
+  background: transparent;
+  color: var(--sietelsa-light);
+}
+
+.sietelsa-image-cover {
+  object-fit: cover;
+}
+
+.sietelsa-image-contain {
+  object-fit: contain;
+}
+
+.sietelsa-page-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: var(--sietelsa-light);
+  pointer-events: none;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 180ms ease, visibility 180ms ease;
+  animation: sietelsa-loader-safety 400ms ease 3s forwards;
+}
+
+.sietelsa-js .sietelsa-page-loader {
+  display: flex;
+}
+
+.sietelsa-page-loader.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.sietelsa-loader-content {
+  display: grid;
+  justify-items: center;
+  gap: 18px;
+}
+
+.sietelsa-loader-logo {
+  width: clamp(150px, 25vw, 230px);
+}
+
+.sietelsa-loader-spinner,
+.sietelsa-button-spinner {
+  display: inline-block;
+  border: 3px solid rgba(21, 38, 111, 0.2);
+  border-top-color: var(--sietelsa-accent);
+  border-radius: 50%;
+  animation: sietelsa-spin 700ms linear infinite;
+}
+
+.sietelsa-loader-spinner {
+  width: 34px;
+  height: 34px;
+}
+
+.sietelsa-button-spinner {
+  width: 1em;
+  height: 1em;
+  margin-right: 0.55em;
+  vertical-align: -0.15em;
+  border-width: 2px;
+  border-color: rgba(255, 255, 255, 0.4);
+  border-top-color: var(--sietelsa-light);
+}
+
+.navbar .navbar-brand-wrapper .navbar-brand .sietelsa-dashboard-logo {
+  width: 132px;
+  height: 58px;
+  max-width: 100%;
+  margin: 0;
+  object-fit: contain;
+}
+
+.navbar .navbar-brand-wrapper .brand-logo-mini .sietelsa-dashboard-logo {
+  width: 42px;
+  height: 42px;
+}
+
+.auth .brand-logo .sietelsa-login-logo {
+  width: min(240px, 100%);
+  height: auto;
+  max-height: 134px;
+  margin: 0 auto;
+}
+
+.sietelsa-error-logo {
+  width: min(220px, 70vw);
+  margin: 0 auto 1.5rem;
+}
+
+.error-page.bg-primary,
+.error-page.bg-info {
+  background-color: var(--sietelsa-primary) !important;
+}
+
+.sietelsa-footer-logo {
+  width: min(190px, 100%);
+  margin-bottom: 1rem;
+}
+
+.swal2-confirm {
+  background-color: var(--sietelsa-primary) !important;
+}
+
+.swal2-cancel {
+  background-color: #6c757d !important;
+}
+
+@keyframes sietelsa-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes sietelsa-loader-safety {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@media (min-width: 1200px) {
+  .header {
+    padding: 9px 0;
+  }
+
+  .navmenu > ul {
+    align-items: center;
+  }
+
+  .navmenu a,
+  .navmenu a:focus,
+  .sietelsa-nav-logout {
+    padding: 0 2px;
+    letter-spacing: 0.02em;
+  }
+}
+
+@media (max-width: 1199px) {
+  html {
+    scroll-padding-top: 78px;
+  }
+
+  .header {
+    padding: 6px 0;
+  }
+
+  .header .logo .sietelsa-website-logo {
+    width: 105px;
+    max-height: 58px;
+  }
+
+  .mobile-nav-active .navmenu > ul {
+    background-color: var(--sietelsa-primary-dark);
+  }
+
+  .navmenu a,
+  .navmenu a:focus,
+  .sietelsa-nav-logout {
+    color: var(--sietelsa-light);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

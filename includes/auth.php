@@ -217,3 +217,4 @@ function auth_require_admin(): void
 }
 
 auth_start_session();
+require_once __DIR__ . '/branding.php';

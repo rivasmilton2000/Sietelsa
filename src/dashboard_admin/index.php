@@ -6,12 +6,12 @@ require_once __DIR__ . '/../../includes/auth.php';
 auth_require_admin();
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Star Admin2 </title>
+    <title>Panel administrativo | SIETELSA</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="assets/vendors/feather/feather.css">
     <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
@@ -28,10 +28,18 @@ auth_require_admin();
     <!-- End plugin css for this page -->
     <!-- inject:css -->
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="<?= auth_escape(app_url('src/website/assets/css/sietelsa.css')) ?>">
+    <script>document.documentElement.classList.add('sietelsa-js');</script>
     <!-- endinject -->
-    <link rel="shortcut icon" href="assets/images/favicon.png" />
+    <link rel="icon" type="image/png" href="<?= auth_escape(sietelsa_logo_url()) ?>">
   </head>
   <body class="with-welcome-text">
+    <div class="sietelsa-page-loader" role="status" aria-label="Cargando panel administrativo">
+      <div class="sietelsa-loader-content">
+        <?= sietelsa_logo_picture('sietelsa-brand-logo sietelsa-loader-logo') ?>
+        <span class="sietelsa-loader-spinner" aria-hidden="true"></span>
+      </div>
+    </div>
     <div class="container-scroller">
       <div class="row p-0 m-0 proBanner" id="proBanner">
         <div class="col-md-12 p-0 m-0">
@@ -61,10 +69,10 @@ auth_require_admin();
           </div>
           <div>
             <a class="navbar-brand brand-logo" href="index.php">
-              <img src="assets/images/logo.svg" alt="logo" />
+              <?= sietelsa_logo_picture('sietelsa-brand-logo sietelsa-dashboard-logo') ?>
             </a>
             <a class="navbar-brand brand-logo-mini" href="index.php">
-              <img src="assets/images/logo-mini.svg" alt="logo" />
+              <?= sietelsa_logo_picture('sietelsa-brand-logo sietelsa-dashboard-logo') ?>
             </a>
           </div>
         </div>
@@ -805,5 +813,8 @@ auth_require_admin();
     <script src="assets/js/dashboard.js"></script>
     <!-- <script src="assets/js/Chart.roundedBarCharts.js"></script> -->
     <!-- End custom js for this page-->
+
+    <script src="<?= auth_escape(app_url('src/website/assets/vendor/sweetalert2/sweetalert2.all.min.js')) ?>"></script>
+    <script src="<?= auth_escape(app_url('src/website/assets/js/sietelsa-ui.js')) ?>"></script>
   </body>
 </html>

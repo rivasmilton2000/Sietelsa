@@ -5,18 +5,18 @@ declare(strict_types=1);
 require_once __DIR__ . '/../../includes/auth.php';
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Service Details - Maxim Bootstrap Template</title>
+  <title>Detalle de servicio | SIETELSA</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
   <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link href="<?= auth_escape(sietelsa_logo_url()) ?>" rel="icon" type="image/png">
+  <link href="<?= auth_escape(sietelsa_logo_url()) ?>" rel="apple-touch-icon">
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -32,6 +32,8 @@ require_once __DIR__ . '/../../includes/auth.php';
 
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
+  <link href="assets/css/sietelsa.css" rel="stylesheet">
+  <script>document.documentElement.classList.add('sietelsa-js');</script>
 
   <!-- =======================================================
   * Template Name: Maxim
@@ -44,55 +46,16 @@ require_once __DIR__ . '/../../includes/auth.php';
 
 <body class="service-details-page">
 
+  <div class="sietelsa-page-loader" role="status" aria-label="Cargando SIETELSA">
+    <div class="sietelsa-loader-content">
+      <?= sietelsa_logo_picture('sietelsa-brand-logo sietelsa-loader-logo') ?>
+      <span class="sietelsa-loader-spinner" aria-hidden="true"></span>
+    </div>
+  </div>
+
   <header id="header" class="header d-flex align-items-center fixed-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
-
-      <a href="../../index.php" class="logo d-flex align-items-center">
-        <!-- Uncomment the line below if you also wish to use an image logo -->
-        <!-- <img src="assets/img/logo.png" alt=""> -->
-        <h1 class="sitename">Maxim</h1>
-      </a>
-
-      <nav id="navmenu" class="navmenu">
-        <ul>
-          <li><a href="#hero">Home</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#portfolio">Portfolio</a></li>
-          <li><a href="#team">Team</a></li>
-          <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-            <ul>
-              <li><a href="#">Dropdown 1</a></li>
-              <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                <ul>
-                  <li><a href="#">Deep Dropdown 1</a></li>
-                  <li><a href="#">Deep Dropdown 2</a></li>
-                  <li><a href="#">Deep Dropdown 3</a></li>
-                  <li><a href="#">Deep Dropdown 4</a></li>
-                  <li><a href="#">Deep Dropdown 5</a></li>
-                </ul>
-              </li>
-              <li><a href="#">Dropdown 2</a></li>
-              <li><a href="#">Dropdown 3</a></li>
-              <li><a href="#">Dropdown 4</a></li>
-            </ul>
-          </li>
-          <?php if (auth_is_admin()): ?>
-            <li><a href="<?= auth_escape(app_url('src/dashboard_admin/index.php')) ?>">Dashboard</a></li>
-            <li><a href="#" onclick="event.preventDefault(); document.getElementById('websiteLogoutForm').submit();">Cerrar sesión</a></li>
-          <?php else: ?>
-            <li><a href="<?= auth_escape(app_url('src/login/login.php')) ?>">Iniciar sesión</a></li>
-          <?php endif; ?>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
-      <?php if (auth_is_admin()): ?>
-        <form id="websiteLogoutForm" method="post" action="<?= auth_escape(app_url('src/login/logout.php')) ?>" class="d-none">
-          <input type="hidden" name="csrf_token" value="<?= auth_escape(auth_csrf_token()) ?>">
-        </form>
-      <?php endif; ?>
-
+      <?php require __DIR__ . '/../../includes/public-navbar.php'; ?>
     </div>
   </header>
 
@@ -132,7 +95,7 @@ require_once __DIR__ . '/../../includes/auth.php';
           </div>
 
           <div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
-            <img src="assets/img/services.jpg" alt="" class="img-fluid services-img">
+            <img src="assets/img/services.jpg" width="1024" height="648" alt="" class="img-fluid services-img sietelsa-image-cover" loading="lazy" decoding="async">
             <h3>Temporibus et in vero dicta aut eius lidero plastis trand lined voluptas dolorem ut voluptas</h3>
             <p>
               Blanditiis voluptate odit ex error ea sed officiis deserunt. Cupiditate non consequatur et doloremque consequuntur. Accusantium labore reprehenderit error temporibus saepe perferendis fuga doloribus vero. Qui omnis quo sit. Dolorem architecto eum et quos deleniti officia qui.
@@ -163,8 +126,8 @@ require_once __DIR__ . '/../../includes/auth.php';
     <div class="container footer-top">
       <div class="row gy-4">
         <div class="col-lg-4 col-md-6 footer-about">
-          <a href="../../index.php" class="logo d-flex align-items-center">
-            <span class="sitename">Maxim</span>
+          <a href="<?= auth_escape(app_url('index.php')) ?>" class="logo d-flex align-items-center" aria-label="SIETELSA - Inicio">
+            <?= sietelsa_logo_picture('sietelsa-brand-logo sietelsa-footer-logo', '', false) ?>
           </a>
           <div class="footer-contact pt-3">
             <p>A108 Adam Street</p>
@@ -217,7 +180,7 @@ require_once __DIR__ . '/../../includes/auth.php';
     </div>
 
     <div class="container copyright text-center mt-4">
-      <p>© <span>Copyright</span> <strong class="px-1 sitename">Maxim</strong> <span>All Rights Reserved</span></p>
+      <p>© <span>Copyright</span> <strong class="px-1 sitename">SIETELSA</strong> <span>Todos los derechos reservados</span></p>
       <div class="credits">
         <!-- All the links in the footer should remain intact. -->
         <!-- You can delete the links only if you've purchased the pro version. -->
@@ -232,9 +195,6 @@ require_once __DIR__ . '/../../includes/auth.php';
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-  <!-- Preloader -->
-  <div id="preloader"></div>
-
   <!-- Vendor JS Files -->
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="assets/vendor/php-email-form/validate.js"></script>
@@ -246,6 +206,8 @@ require_once __DIR__ . '/../../includes/auth.php';
 
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script src="assets/vendor/sweetalert2/sweetalert2.all.min.js"></script>
+  <script src="assets/js/sietelsa-ui.js"></script>
 
 </body>
 

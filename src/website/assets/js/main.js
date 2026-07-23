@@ -27,12 +27,26 @@
    */
   const mobileNavToggleBtn = document.querySelector('.mobile-nav-toggle');
 
-  function mobileNavToogle() {
-    document.querySelector('body').classList.toggle('mobile-nav-active');
+  function mobileNavToggle() {
+    const isActive = document.querySelector('body').classList.toggle('mobile-nav-active');
     mobileNavToggleBtn.classList.toggle('bi-list');
     mobileNavToggleBtn.classList.toggle('bi-x');
+    mobileNavToggleBtn.setAttribute('aria-expanded', String(isActive));
+    mobileNavToggleBtn.setAttribute('aria-label', isActive ? 'Cerrar menú' : 'Abrir menú');
   }
-  mobileNavToggleBtn.addEventListener('click', mobileNavToogle);
+  mobileNavToggleBtn.addEventListener('click', mobileNavToggle);
+  mobileNavToggleBtn.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      mobileNavToggle();
+    }
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && document.body.classList.contains('mobile-nav-active')) {
+      mobileNavToggle();
+      mobileNavToggleBtn.focus();
+    }
+  });
 
   /**
    * Hide mobile nav on same-page/hash links
@@ -40,7 +54,7 @@
   document.querySelectorAll('#navmenu a').forEach(navmenu => {
     navmenu.addEventListener('click', () => {
       if (document.querySelector('.mobile-nav-active')) {
-        mobileNavToogle();
+        mobileNavToggle();
       }
     });
 
@@ -93,6 +107,9 @@
    * Animation on scroll function and init
    */
   function aosInit() {
+    if (typeof AOS === 'undefined') {
+      return;
+    }
     AOS.init({
       duration: 600,
       easing: 'ease-in-out',
@@ -100,7 +117,11 @@
       mirror: false
     });
   }
-  window.addEventListener('load', aosInit);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', aosInit, { once: true });
+  } else {
+    aosInit();
+  }
 
   /**
    * Init swiper sliders
@@ -199,7 +220,8 @@
       let section = document.querySelector(navmenulink.hash);
       if (!section) return;
       let position = window.scrollY + 200;
-      if (position >= section.offsetTop && position <= (section.offsetTop + section.offsetHeight)) {
+      let sectionTop = section.getBoundingClientRect().top + window.scrollY;
+      if (position >= sectionTop && position <= (sectionTop + section.offsetHeight)) {
         document.querySelectorAll('.navmenu a.active').forEach(link => link.classList.remove('active'));
         navmenulink.classList.add('active');
       } else {
