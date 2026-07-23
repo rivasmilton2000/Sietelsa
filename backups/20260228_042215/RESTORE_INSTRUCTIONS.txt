@@ -1,0 +1,19 @@
+SIETELSA BACKUP RESTORE
+Generated: 2026-02-28 04:22:15
+
+Backup files:
+- sietelsa_db_20260228_042215.sql
+- sietelsa_project_20260228_042215.zip
+
+Recommended restore order:
+1) Put the app in maintenance mode.
+2) Restore project files:
+   unzip -oq /var/www/html/backups/20260228_042215/sietelsa_project_20260228_042215.zip -d /var/www/html
+3) Restore database:
+   MYSQL_PWD='YOUR_DB_PASSWORD' mysql -h 127.0.0.1 -P 3306 -u YOUR_DB_USER sietelsa < /var/www/html/backups/20260228_042215/sietelsa_db_20260228_042215.sql
+4) Clear application/cache sessions if applicable.
+5) Disable maintenance mode and validate login + admin modules.
+
+Integrity fingerprints:
+- SQL SHA256: 95b681523629c1e18673da0da7bd1393116ad99823a26e85583fbe9cfa42a5ec
+- ZIP SHA256: e3467e278d9d83690d69198f18850ff57670bdca2e15a1bca3beb0466ddd9c17
