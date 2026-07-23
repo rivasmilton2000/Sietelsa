@@ -1,3 +1,10 @@
+<?php
+
+declare(strict_types=1);
+
+require_once __DIR__ . '/../../../includes/auth.php';
+auth_require_admin();
+?>
 <footer class="footer">
   <div class="d-sm-flex justify-content-center justify-content-sm-between">
     <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash.</span>

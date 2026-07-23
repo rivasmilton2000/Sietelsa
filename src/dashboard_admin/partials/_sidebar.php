@@ -1,3 +1,10 @@
+<?php
+
+declare(strict_types=1);
+
+require_once __DIR__ . '/../../../includes/auth.php';
+auth_require_admin();
+?>
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
   <ul class="nav">
     <li class="nav-item">

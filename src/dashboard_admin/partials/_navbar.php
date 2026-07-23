@@ -1,3 +1,10 @@
+<?php
+
+declare(strict_types=1);
+
+require_once __DIR__ . '/../../../includes/auth.php';
+auth_require_admin();
+?>
 <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex align-items-top flex-row">
   <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
     <div class="me-3">
@@ -17,7 +24,7 @@
   <div class="navbar-menu-wrapper d-flex align-items-top">
     <ul class="navbar-nav">
       <li class="nav-item fw-semibold d-none d-lg-block ms-0">
-        <h1 class="welcome-text">Good Morning, <span class="text-black fw-bold">John Doe</span></h1>
+        <h1 class="welcome-text">Good Morning, <span class="text-black fw-bold"><?= auth_escape(auth_user_name()) ?></span></h1>
         <h3 class="welcome-sub-text">Your performance summary this week </h3>
       </li>
     </ul>
@@ -153,14 +160,14 @@
         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
           <div class="dropdown-header text-center">
             <img class="img-md rounded-circle" src="../assets/images/faces/face8.jpg" alt="Profile image">
-            <p class="mb-1 mt-3 fw-semibold">Allen Moreno</p>
-            <p class="fw-light text-muted mb-0">allenmoreno@gmail.com</p>
+            <p class="mb-1 mt-3 fw-semibold"><?= auth_escape(auth_user_name()) ?></p>
+            <p class="fw-light text-muted mb-0"><?= auth_escape(auth_user_identifier()) ?></p>
           </div>
           <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-account-outline text-primary me-2"></i> My Profile <span class="badge badge-pill badge-danger">1</span></a>
           <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-message-text-outline text-primary me-2"></i> Messages</a>
           <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-calendar-check-outline text-primary me-2"></i> Activity</a>
           <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-help-circle-outline text-primary me-2"></i> FAQ</a>
-          <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>Sign Out</a>
+          <form method="post" action="<?= auth_escape(app_url('src/login/logout.php')) ?>" class="m-0"><input type="hidden" name="csrf_token" value="<?= auth_escape(auth_csrf_token()) ?>"><button type="submit" class="dropdown-item border-0"><i class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>Sign Out</button></form>
         </div>
       </li>
     </ul>

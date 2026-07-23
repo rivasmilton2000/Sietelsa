@@ -1,3 +1,9 @@
+<?php
+
+declare(strict_types=1);
+
+require_once __DIR__ . '/../../includes/auth.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -71,10 +77,21 @@
               <li><a href="#">Dropdown 4</a></li>
             </ul>
           </li>
+          <?php if (auth_is_admin()): ?>
+            <li><a href="<?= auth_escape(app_url('src/dashboard_admin/index.php')) ?>">Dashboard</a></li>
+            <li><a href="#" onclick="event.preventDefault(); document.getElementById('websiteLogoutForm').submit();">Cerrar sesión</a></li>
+          <?php else: ?>
+            <li><a href="<?= auth_escape(app_url('src/login/login.php')) ?>">Iniciar sesión</a></li>
+          <?php endif; ?>
           <li><a href="#contact">Contact</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
+      <?php if (auth_is_admin()): ?>
+        <form id="websiteLogoutForm" method="post" action="<?= auth_escape(app_url('src/login/logout.php')) ?>" class="d-none">
+          <input type="hidden" name="csrf_token" value="<?= auth_escape(auth_csrf_token()) ?>">
+        </form>
+      <?php endif; ?>
 
     </div>
   </header>
