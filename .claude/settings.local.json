@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(nc -zv 187.124.66.220 3306)",
+      "Bash(echo \"exit: $?\")",
+      "Bash(ip addr:*)",
+      "Read(//var/www/html/**)",
+      "Bash(sudo sed:*)",
+      "Read(//etc/mysql/mysql.conf.d/**)",
+      "Bash(sudo systemctl:*)",
+      "Bash(systemctl is-active:*)"
+    ]
+  }
+}
