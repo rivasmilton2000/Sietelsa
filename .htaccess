@@ -1,0 +1,190 @@
+# Paginas de error personalizadas
+ErrorDocument 401 /admin/error/401
+ErrorDocument 403 /admin/error/403
+ErrorDocument 404 /admin/error/404
+ErrorDocument 500 /admin/error/500
+
+Options -Indexes
+FileETag MTime Size
+LimitRequestBody 67108864
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Bloquea metodos HTTP peligrosos o no usados por la aplicacion.
+    RewriteCond %{REQUEST_METHOD} ^(TRACE|TRACK|CONNECT|DEBUG)$ [NC]
+    RewriteRule ^ - [F,L]
+
+    # Bloquea dotfiles sensibles (ej. .env), excepto ACME challenge.
+    RewriteRule (^|/)\.(?!well-known(?:/|$)) - [F,L]
+
+    # Canonical del dominio: https + sin www.
+    RewriteCond %{HTTP_HOST} ^www\.sietelsaonline\.com$ [NC]
+    RewriteRule ^ https://sietelsaonline.com%{REQUEST_URI} [R=301,L]
+
+    RewriteCond %{HTTPS} !=on
+    RewriteCond %{HTTP_HOST} ^(?:www\.)?sietelsaonline\.com$ [NC]
+    RewriteRule ^ https://sietelsaonline.com%{REQUEST_URI} [R=301,L]
+
+    # Canonical: evita exponer index.php.
+    RewriteCond %{THE_REQUEST} \s/+index\.php(?:[?\s]|$) [NC]
+    RewriteRule ^index\.php$ / [R=301,L]
+
+    # Redirecciones 301 de rutas antiguas/Wix hacia paginas vigentes.
+    RewriteRule ^centrales-generacion-electrica/?$ /energia [R=301,L,NC]
+    RewriteRule ^enlaces-de-microondas/?$ /enlaces-microondas [R=301,L,NC]
+    RewriteRule ^microondas/?$ /enlaces-microondas [R=301,L,NC]
+    RewriteRule ^radio-bases/?$ /radiobases [R=301,L,NC]
+    RewriteRule ^radiobase(?:s)?/?$ /radiobases [R=301,L,NC]
+    RewriteRule ^fibraoptica/?$ /fibra-optica [R=301,L,NC]
+    RewriteRule ^torres-monopolos/?$ /torres-y-monopolos [R=301,L,NC]
+    RewriteRule ^wix.*$ / [R=301,L,NC]
+
+    # Bloquea acceso directo por URL a carpetas internas.
+    RewriteCond %{THE_REQUEST} \s/+((?:include|database|sql|config|pages/pages_admin)/[^\s?]*) [NC]
+    RewriteRule ^ - [F,L]
+
+    # Rutas publicas amigables.
+    RewriteRule ^$ index.php [L]
+    RewriteRule ^inicio/?$ index.php [L,NC]
+    RewriteRule ^servicios/?$ index.php?section=servicios [QSA,L,NC]
+    RewriteRule ^portafolio/?$ index.php?section=portafolio [QSA,L,NC]
+    RewriteRule ^nosotros/?$ index.php?section=nosotros [QSA,L,NC]
+    RewriteRule ^proyectos/?$ index.php?section=proyectos [QSA,L,NC]
+    RewriteRule ^contacto/?$ index.php?section=contacto [QSA,L,NC]
+    RewriteRule ^fibra-optica/?$ index.php?service=fibra-optica [QSA,L,NC]
+    RewriteRule ^radiobases/?$ index.php?service=radiobases [QSA,L,NC]
+    RewriteRule ^enlaces-microondas/?$ index.php?service=enlaces-microondas [QSA,L,NC]
+    RewriteRule ^energia/?$ index.php?service=energia [QSA,L,NC]
+    RewriteRule ^torres-y-monopolos/?$ index.php?service=torres-y-monopolos [QSA,L,NC]
+    RewriteRule ^contacto/enviar/?$ include/contacto_guardar.php [L,NC]
+    RewriteRule ^contacto/([a-z_]+)/?$ index.php?contacto=$1&section=contacto [QSA,L,NC]
+    RewriteRule ^maintenance/?$ maintenance.php [L,NC]
+
+    # Rutas amigables de administracion.
+    RewriteRule ^admin/?$ pages/pages_admin/dashboard.php [L,NC]
+    RewriteRule ^admin/login/?$ pages/pages_admin/login.php [L,NC]
+    RewriteRule ^admin/dashboard/?$ pages/pages_admin/dashboard.php [L,NC]
+    RewriteRule ^admin/servicios/?$ pages/pages_admin/servicios_gestion.php [L,NC]
+    RewriteRule ^admin/portafolio/?$ pages/pages_admin/portafolio_gestion.php [L,NC]
+    RewriteRule ^admin/proyectos/?$ pages/pages_admin/proyectos_gestion.php [L,NC]
+    RewriteRule ^admin/nosotros/?$ pages/pages_admin/nosotros_gestion.php [L,NC]
+    RewriteRule ^admin/contacto/?$ pages/pages_admin/contacto_gestion.php [L,NC]
+    RewriteRule ^admin/perfiles/?$ pages/pages_admin/perfiles_gestion.php [L,NC]
+    RewriteRule ^admin/bitacora/?$ pages/pages_admin/bitacora.php [L,NC]
+    RewriteRule ^admin/modulos/aprobacion/?$ pages/pages_admin/modules_approval.php [L,NC]
+    RewriteRule ^admin/modulos/permisos/?$ pages/pages_admin/modulos_permisos.php [L,NC]
+    RewriteRule ^admin/usuarios/registro/?$ pages/pages_admin/usuarios_registro.php [L,NC]
+    RewriteRule ^admin/usuarios/editar/?$ pages/pages_admin/usuarios_editar.php [L,NC]
+    RewriteRule ^admin/usuarios/eliminar/?$ pages/pages_admin/usuarios_eliminar.php [L,NC]
+    RewriteRule ^admin/backup/?$ pages/pages_admin/backup.php [L,NC]
+    RewriteRule ^admin/mantenimiento/?$ pages/pages_admin/mantenimiento_config.php [L,NC]
+    RewriteRule ^admin/setup-admin/?$ pages/pages_admin/setup_admin.php [L,NC]
+    RewriteRule ^admin/primer-acceso/cambiar-clave/?$ pages/pages_admin/first_password_change.php [L,NC]
+    RewriteRule ^admin/dte$ /admin/dte/ [R=302,L,NC]
+    RewriteRule ^admin/dte/?$ dte_sietelsa/src/index.php [L,NC]
+    RewriteRule ^admin/dte/src/(.+)$ dte_sietelsa/src/$1 [L,NC]
+    RewriteRule ^admin/dte/pages/(.+)$ dte_sietelsa/src/pages/$1 [L,NC]
+    RewriteRule ^admin/dte/api/(.+)$ dte_sietelsa/src/api/$1 [L,NC]
+    RewriteRule ^admin/dte/assets/(.+)$ dte_sietelsa/src/assets/$1 [L,NC]
+    RewriteRule ^admin/(?:[^/]+/)*css/(.+)$ pages/pages_admin/css/$1 [L,NC]
+    RewriteRule ^admin/(?:[^/]+/)*js/(.+)$ pages/pages_admin/js/$1 [L,NC]
+    RewriteRule ^admin/(?:[^/]+/)*assets/(.+)$ pages/pages_admin/assets/$1 [L,NC]
+    RewriteRule ^admin/error/401/?$ pages/pages_admin/401.html [L,NC]
+    RewriteRule ^admin/error/403/?$ pages/pages_admin/403.html [L,NC]
+    RewriteRule ^admin/error/404/?$ pages/pages_admin/404.html [L,NC]
+    RewriteRule ^admin/error/500/?$ pages/pages_admin/500.html [L,NC]
+
+    # Endpoints de acciones admin y autenticacion.
+    RewriteRule ^admin/auth/login/?$ include/procesar_login.php [L,NC]
+    RewriteRule ^admin/auth/google/?$ include/google_login_inicio.php [L,NC]
+    RewriteRule ^admin/auth/google/callback/?$ include/google_login_callback.php [L,NC]
+    RewriteRule ^admin/auth/logout/?$ include/logout.php [L,NC]
+    RewriteRule ^admin/auth/setup-admin/?$ include/setup_admin_guardar.php [L,NC]
+    RewriteRule ^admin/auth/primer-acceso/cambiar-clave/?$ include/first_password_change_guardar.php [L,NC]
+    RewriteRule ^admin/instalar-bd/?$ include/instalar_bd.php [L,NC]
+    RewriteRule ^admin/acciones/servicios/?$ include/servicios_guardar.php [L,NC]
+    RewriteRule ^admin/acciones/nosotros/?$ include/nosotros_guardar.php [L,NC]
+    RewriteRule ^admin/acciones/portafolio/?$ include/portafolio_guardar.php [L,NC]
+    RewriteRule ^admin/acciones/proyectos/?$ include/proyectos_guardar.php [L,NC]
+    RewriteRule ^admin/acciones/contacto-responder/?$ include/contacto_responder.php [L,NC]
+    RewriteRule ^admin/acciones/perfil/?$ include/perfil_guardar.php [L,NC]
+    RewriteRule ^admin/acciones/usuarios/?$ include/usuarios_guardar.php [L,NC]
+    RewriteRule ^admin/acciones/usuarios/eliminar/?$ include/usuarios_eliminar.php [L,NC]
+    RewriteRule ^admin/acciones/perfiles/?$ include/perfiles_guardar.php [L,NC]
+    RewriteRule ^admin/acciones/modulos/aprobacion/?$ include/modules_approval_guardar.php [L,NC]
+    RewriteRule ^admin/acciones/modulos/permisos/?$ include/modulos_permisos_guardar.php [L,NC]
+    RewriteRule ^admin/acciones/backup/?$ include/backup_generar.php [L,NC]
+    RewriteRule ^admin/acciones/mantenimiento/?$ include/mantenimiento_guardar.php [L,NC]
+    RewriteRule ^admin/acciones/mantenimiento/password/?$ include/mantenimiento_password_guardar.php [L,NC]
+    RewriteRule ^admin/acciones/mantenimiento/reporte/?$ include/mantenimiento_reporte.php [L,NC]
+
+    # Si existe archivo o carpeta fisica (assets, css, js), servir directo.
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # Bloquea acceso directo a cualquier *.php visible por URL.
+    RewriteCond %{THE_REQUEST} \s/+[^\s?]+\.php(?:[?\s]|$) [NC]
+    RewriteRule ^ - [R=404,L]
+</IfModule>
+
+<IfModule mod_brotli.c>
+    AddOutputFilterByType BROTLI_COMPRESS text/plain text/html text/xml text/css application/javascript application/json application/xml image/svg+xml
+</IfModule>
+
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/plain text/html text/xml text/css application/javascript application/json application/xml image/svg+xml
+</IfModule>
+
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css "access plus 30 days"
+    ExpiresByType application/javascript "access plus 30 days"
+    ExpiresByType image/jpeg "access plus 90 days"
+    ExpiresByType image/png "access plus 90 days"
+    ExpiresByType image/webp "access plus 90 days"
+    ExpiresByType image/avif "access plus 90 days"
+    ExpiresByType image/svg+xml "access plus 90 days"
+    ExpiresByType image/x-icon "access plus 90 days"
+    ExpiresByType font/woff2 "access plus 90 days"
+</IfModule>
+
+<IfModule mod_headers.c>
+    Header merge Vary "Accept-Encoding"
+    Header merge Vary "Accept"
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+    Header always set Cross-Origin-Opener-Policy "same-origin"
+    Header always set Cross-Origin-Resource-Policy "same-site"
+    Header always set X-Permitted-Cross-Domain-Policies "none"
+    Header always set X-Download-Options "noopen"
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" "expr=%{HTTPS} == 'on'"
+    Header always set Content-Security-Policy "default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; script-src 'self' 'unsafe-inline' https://www.google.com https://www.gstatic.com https://use.fontawesome.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; connect-src 'self' https://www.google.com https://www.gstatic.com https://cdn.jsdelivr.net; frame-src https://www.google.com https://www.gstatic.com; upgrade-insecure-requests"
+
+    SetEnvIfExpr "%{REQUEST_URI} =~ m#^/admin(?:/?$|/(?:dashboard|servicios|portafolio|proyectos|nosotros|contacto|perfiles|bitacora|modulos/aprobacion|modulos/permisos|backup|mantenimiento|login|setup-admin|primer-acceso/cambiar-clave|usuarios/registro|usuarios/editar|usuarios/eliminar|dte)(?:/|$))#" SIETELSA_PRIVATE_HTML=1
+
+    <FilesMatch "\.(css|js)$">
+        Header set Cache-Control "public, max-age=2592000, immutable"
+    </FilesMatch>
+    <FilesMatch "\.(jpg|jpeg|png|webp|avif|svg|ico|woff2)$">
+        Header set Cache-Control "public, max-age=7776000, immutable"
+    </FilesMatch>
+    <FilesMatch "\.(php)$">
+        Header always set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+        Header always set Pragma "no-cache"
+        Header always set Expires "0"
+    </FilesMatch>
+
+    Header always set Cache-Control "no-store, no-cache, must-revalidate, max-age=0" env=SIETELSA_PRIVATE_HTML
+    Header always set Pragma "no-cache" env=SIETELSA_PRIVATE_HTML
+    Header always set Expires "0" env=SIETELSA_PRIVATE_HTML
+</IfModule>
+
+<IfModule mod_mime.c>
+    AddType image/avif .avif
+    AddType image/webp .webp
+    AddType application/manifest+json .webmanifest
+</IfModule>
