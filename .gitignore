@@ -1,0 +1,12 @@
+.env
+.claude/settings.local.json
+logs/*.log
+logs/*.log.*
+logs/*.tmp
+database/backup_*.sql
+backups/
+dte/*backup*.sql
+dte/*.zip
+assets/cache/*
+assets/uploads/usuarios/*
+!assets/uploads/usuarios/.gitkeep
