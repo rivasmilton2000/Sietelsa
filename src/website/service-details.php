@@ -41,7 +41,7 @@
   <header id="header" class="header d-flex align-items-center fixed-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
 
-      <a href="index.html" class="logo d-flex align-items-center">
+      <a href="../../index.php" class="logo d-flex align-items-center">
         <!-- Uncomment the line below if you also wish to use an image logo -->
         <!-- <img src="assets/img/logo.png" alt=""> -->
         <h1 class="sitename">Maxim</h1>
@@ -87,7 +87,7 @@
         <h1>Service Details</h1>
         <nav class="breadcrumbs">
           <ol>
-            <li><a href="index.html">Home</a></li>
+            <li><a href="../../index.php">Home</a></li>
             <li class="current">Service Details</li>
           </ol>
         </nav>
@@ -146,7 +146,7 @@
     <div class="container footer-top">
       <div class="row gy-4">
         <div class="col-lg-4 col-md-6 footer-about">
-          <a href="index.html" class="logo d-flex align-items-center">
+          <a href="../../index.php" class="logo d-flex align-items-center">
             <span class="sitename">Maxim</span>
           </a>
           <div class="footer-contact pt-3">
