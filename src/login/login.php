@@ -5,8 +5,8 @@ declare(strict_types=1);
 require_once __DIR__ . '/../../includes/auth.php';
 require_once __DIR__ . '/../../includes/conexion.php';
 
-if (auth_is_admin()) {
-    auth_redirect('src/dashboard_admin/index.php');
+if (auth_is_authenticated()) {
+    auth_redirect(auth_is_admin() ? 'src/dashboard_admin/index.php' : 'src/user/panel.php');
 }
 
 $errorMessage = '';
@@ -80,8 +80,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $errorMessage = 'La cuenta está temporalmente bloqueada. Intente más tarde.';
             } elseif ((int) $user['activo'] !== 1) {
                 $errorMessage = 'La cuenta se encuentra desactivada. Contacte al administrador.';
-            } elseif ($user['rol'] !== 'admin') {
-                $errorMessage = 'La cuenta no tiene acceso al área administrativa.';
             } else {
                 if (password_needs_rehash((string) $user['password_hash'], PASSWORD_DEFAULT)) {
                     $rehashStatement = $connection->prepare(
@@ -104,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $accessStatement->execute(['id' => (int) $user['id']]);
 
                 auth_store_user($user);
-                auth_redirect('src/dashboard_admin/index.php');
+                auth_redirect($user['rol'] === 'admin' ? 'src/dashboard_admin/index.php' : 'src/user/panel.php');
             }
         } catch (Throwable $exception) {
             error_log('[SIETELSA] Error controlado durante el inicio de sesión: ' . $exception->getMessage());

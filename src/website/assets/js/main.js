@@ -33,14 +33,12 @@
     mobileNavToggleBtn.classList.toggle('bi-x');
     mobileNavToggleBtn.setAttribute('aria-expanded', String(isActive));
     mobileNavToggleBtn.setAttribute('aria-label', isActive ? 'Cerrar menú' : 'Abrir menú');
+    const glyph = mobileNavToggleBtn.querySelector('.sietelsa-menu-glyph');
+    if (glyph) {
+      glyph.textContent = isActive ? '×' : '☰';
+    }
   }
   mobileNavToggleBtn.addEventListener('click', mobileNavToggle);
-  mobileNavToggleBtn.addEventListener('keydown', (event) => {
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault();
-      mobileNavToggle();
-    }
-  });
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && document.body.classList.contains('mobile-nav-active')) {
       mobileNavToggle();

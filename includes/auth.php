@@ -106,6 +106,11 @@ function auth_is_admin(): bool
     return isset($user['role']) && $user['role'] === 'admin';
 }
 
+function auth_user_role(): string
+{
+    return (string) (auth_current_user()['role'] ?? '');
+}
+
 function auth_user_name(): string
 {
     $user = auth_current_user();
@@ -177,8 +182,7 @@ function auth_require_admin(): void
     }
 
     if (($sessionUser['role'] ?? '') !== 'admin') {
-        auth_logout();
-        auth_redirect('index.php');
+        auth_redirect('src/user/panel.php?status=denied');
     }
 
     require_once __DIR__ . '/conexion.php';
@@ -214,6 +218,26 @@ function auth_require_admin(): void
         'email' => (string) $databaseUser['email'],
         'role' => (string) $databaseUser['rol'],
     ];
+}
+
+function auth_require_authenticated(): void
+{
+    if (!headers_sent()) {
+        header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+        header('Pragma: no-cache');
+    }
+    $user = auth_current_user();
+    if (!$user || !isset($user['id'])) {
+        auth_redirect('src/login/login.php');
+    }
+    require_once __DIR__ . '/conexion.php';
+    $statement = db_connection()->prepare('SELECT activo, rol FROM usuarios WHERE id = :id LIMIT 1');
+    $statement->execute(['id' => (int) $user['id']]);
+    $current = $statement->fetch();
+    if (!$current || (int) $current['activo'] !== 1 || $current['rol'] !== ($user['role'] ?? '')) {
+        auth_logout();
+        auth_redirect('src/login/login.php?status=denied');
+    }
 }
 
 auth_start_session();

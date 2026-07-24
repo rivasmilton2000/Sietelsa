@@ -13,10 +13,10 @@ auth_require_admin();
       </button>
     </div>
     <div>
-      <a class="navbar-brand brand-logo" href="../index.php">
+      <a class="navbar-brand brand-logo" href="<?= auth_escape(app_url('src/dashboard_admin/index.php')) ?>">
         <?= sietelsa_logo_picture('sietelsa-brand-logo sietelsa-dashboard-logo') ?>
       </a>
-      <a class="navbar-brand brand-logo-mini" href="../index.php">
+      <a class="navbar-brand brand-logo-mini" href="<?= auth_escape(app_url('src/dashboard_admin/index.php')) ?>">
         <?= sietelsa_logo_picture('sietelsa-brand-logo sietelsa-dashboard-logo') ?>
       </a>
     </div>
@@ -127,7 +127,7 @@ auth_require_admin();
           <div class="dropdown-divider"></div>
           <a class="dropdown-item preview-item">
             <div class="preview-thumbnail">
-              <img src="../assets/images/faces/face10.jpg" alt="image" class="img-sm profile-pic">
+              <img src="<?= auth_escape(app_url('src/dashboard_admin/assets/images/faces/face10.jpg')) ?>" alt="image" class="img-sm profile-pic">
             </div>
             <div class="preview-item-content flex-grow py-2">
               <p class="preview-subject ellipsis fw-medium text-dark">Marian Garner </p>
@@ -136,7 +136,7 @@ auth_require_admin();
           </a>
           <a class="dropdown-item preview-item">
             <div class="preview-thumbnail">
-              <img src="../assets/images/faces/face12.jpg" alt="image" class="img-sm profile-pic">
+              <img src="<?= auth_escape(app_url('src/dashboard_admin/assets/images/faces/face12.jpg')) ?>" alt="image" class="img-sm profile-pic">
             </div>
             <div class="preview-item-content flex-grow py-2">
               <p class="preview-subject ellipsis fw-medium text-dark">David Grey </p>
@@ -145,7 +145,7 @@ auth_require_admin();
           </a>
           <a class="dropdown-item preview-item">
             <div class="preview-thumbnail">
-              <img src="../assets/images/faces/face1.jpg" alt="image" class="img-sm profile-pic">
+              <img src="<?= auth_escape(app_url('src/dashboard_admin/assets/images/faces/face1.jpg')) ?>" alt="image" class="img-sm profile-pic">
             </div>
             <div class="preview-item-content flex-grow py-2">
               <p class="preview-subject ellipsis fw-medium text-dark">Travis Jenkins </p>
@@ -156,10 +156,10 @@ auth_require_admin();
       </li>
       <li class="nav-item dropdown d-none d-lg-block user-dropdown">
         <a class="nav-link" id="UserDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-          <img class="img-xs rounded-circle" src="../assets/images/faces/face8.jpg" alt="Profile image"> </a>
+          <img class="img-xs rounded-circle" src="<?= auth_escape(app_url('src/dashboard_admin/assets/images/faces/face8.jpg')) ?>" alt="Profile image"> </a>
         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
           <div class="dropdown-header text-center">
-            <img class="img-md rounded-circle" src="../assets/images/faces/face8.jpg" alt="Profile image">
+            <img class="img-md rounded-circle" src="<?= auth_escape(app_url('src/dashboard_admin/assets/images/faces/face8.jpg')) ?>" alt="Profile image">
             <p class="mb-1 mt-3 fw-semibold"><?= auth_escape(auth_user_name()) ?></p>
             <p class="fw-light text-muted mb-0"><?= auth_escape(auth_user_identifier()) ?></p>
           </div>

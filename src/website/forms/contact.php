@@ -1,41 +1,37 @@
 <?php
-  /**
-  * Requires the "PHP Email Form" library
-  * The "PHP Email Form" library is available only in the pro version of the template
-  * The library should be uploaded to: vendor/php-email-form/php-email-form.php
-  * For more info and help: https://bootstrapmade.com/php-email-form/
-  */
 
-  // Replace contact@example.com with your real receiving email address
-  $receiving_email_address = 'contact@example.com';
+declare(strict_types=1);
 
-  if( file_exists($php_email_form = __DIR__ . '/../assets/vendor/php-email-form/php-email-form.php' )) {
-    include( $php_email_form );
-  } else {
-    die( 'Unable to load the "PHP Email Form" Library!');
-  }
+require_once __DIR__ . '/../../../includes/auth.php';
+require_once __DIR__ . '/../../../includes/conexion.php';
 
-  $contact = new PHP_Email_Form;
-  $contact->ajax = true;
-  
-  $contact->to = $receiving_email_address;
-  $contact->from_name = $_POST['name'];
-  $contact->from_email = $_POST['email'];
-  $contact->subject = $_POST['subject'];
-
-  // Uncomment below code if you want to use SMTP to send emails. You need to enter your correct SMTP credentials
-  /*
-  $contact->smtp = array(
-    'host' => 'example.com',
-    'username' => 'example',
-    'password' => 'pass',
-    'port' => '587'
-  );
-  */
-
-  $contact->add_message( $_POST['name'], 'From');
-  $contact->add_message( $_POST['email'], 'Email');
-  $contact->add_message( $_POST['message'], 'Message', 10);
-
-  echo $contact->send();
-?>
+header('Content-Type: text/plain; charset=UTF-8');
+if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !auth_validate_csrf($_POST['csrf_token'] ?? null)) {
+    http_response_code(419);
+    exit('La solicitud expiró. Recargue la página.');
+}
+$name = trim((string) ($_POST['name'] ?? ''));
+$email = trim((string) ($_POST['email'] ?? ''));
+$subject = trim((string) ($_POST['subject'] ?? ''));
+$message = trim((string) ($_POST['message'] ?? ''));
+if ($name === '' || !filter_var($email, FILTER_VALIDATE_EMAIL) || $subject === '' || $message === '') {
+    http_response_code(422);
+    exit('Revise los campos del formulario.');
+}
+try {
+    $statement = db_connection()->prepare(
+        'INSERT INTO contact_messages (message_type, name, email, subject, message, ip_hash)
+         VALUES ("contact", :name, :email, :subject, :message, :ip_hash)'
+    );
+    $ip = (string) ($_SERVER['REMOTE_ADDR'] ?? '');
+    $statement->execute([
+        'name' => mb_substr($name, 0, 150), 'email' => mb_substr($email, 0, 190),
+        'subject' => mb_substr($subject, 0, 200), 'message' => mb_substr($message, 0, 5000),
+        'ip_hash' => $ip === '' ? null : hash('sha256', $ip),
+    ]);
+    echo 'OK';
+} catch (Throwable $exception) {
+    error_log('[SIETELSA] Error al guardar contacto: ' . $exception->getMessage());
+    http_response_code(500);
+    echo 'No fue posible enviar el mensaje.';
+}
